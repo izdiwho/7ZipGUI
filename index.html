@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ZipGUI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 50px;
+        }
+
+        .section {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+
+        .file-list {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            min-height: 50px;
+            background: white;
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            margin: 5px 0;
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+
+        .file-item button {
+            background: #ff4444;
+            padding: 2px 8px;
+        }
+
+        .file-item button:hover {
+            background: #cc0000;
+        }
+
+        button {
+            padding: 8px 16px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        input[type="password"] {
+            padding: 8px;
+            margin: 5px;
+            width: 200px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .status {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .success {
+            background: #dff0d8;
+            color: #3c763d;
+        }
+
+        .error {
+            background: #f2dede;
+            color: #a94442;
+        }
+
+        .output-path {
+            word-break: break-all;
+            margin: 10px 0;
+            padding: 5px;
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+
+        .format-select {
+            margin-bottom: 10px;
+        }
+
+        .format-select select {
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            margin-left: 10px;
+        }
+
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            border: 1px solid #ffeeba;
+        }
+
+        .warning code {
+            background: #fff;
+            padding: 3px 6px;
+            border-radius: 3px;
+            border: 1px solid #ffeeba;
+        }
+
+        .input-group {
+            margin: 10px 0;
+        }
+
+        .input-group input {
+            padding: 8px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 200px;
+        }
+
+        input[type="text"] {
+            width: 300px;
+        }
+
+        .loading {
+            opacity: 0.7;
+            cursor: not-allowed;
+            position: relative;
+        }
+
+        .spinner {
+            display: none;
+            width: 24px;
+            height: 24px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #4CAF50;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes spin {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .section {
+            position: relative;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            text-align: center;
+            font-size: 14px;
+            background: white;
+            border-top: 1px solid #eee;
+            color: #666;
+        }
+
+        .footer a {
+            color: #4CAF50;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #45a049;
+        }
+
+        .coffee-link {
+            display: inline-block;
+            margin-top: 5px;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background: #fff3cd;
+            color: #856404 !important;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .coffee-link:hover {
+            background: #ffe69c;
+            color: #533f03 !important;
+            transform: translateY(-1px);
+        }
+
+        .banner {
+            background: #9ea29f;
+            color: #ffffff;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid #000000;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="installationWarning" class="warning" style="display: none;">
+        <p>⚠️ 7-Zip is not installed. Please install it using Terminal:</p>
+        <code>brew install p7zip</code>
+    </div>
+    <div class="container">
+        <div class="banner">
+            This project was created because I got tired of using the 7z command line to password protect stuff and the
+            Mac apps for these functionalities are sooooo expensive. Cost me ~USD2 of Anthropic credits to create this,
+            enjoy.
+        </div>
+
+        <div id="status" class="status"></div>
+        <div id="archiveSpinner" class="spinner"></div>
+
+        <div class="section">
+            <div class="format-select">
+                <label>Format:</label>
+                <select id="archiveFormat">
+                    <option value="zip">.zip</option>
+                    <option value="7z">.7z</option>
+                </select>
+            </div>
+            <button onclick="selectFiles('archive')">Select Files to Archive</button>
+            <div id="archiveFileList" class="file-list"></div>
+            <div class="input-group">
+                <input type="text" id="customName" placeholder="Custom archive name (optional)">
+                <input type="password" id="archivePassword" placeholder="Password (optional)">
+            </div>
+            <button onclick="archive()">Create Archive</button>
+        </div>
+
+    </div>
+    <footer class="footer">
+        coded by Claude Sonnet-3.5 & <a href="https://izdiwho.com" target="_blank" rel="noopener">izdiwho</a>
+        <br>
+        <a href="https://buymeacoffee.com/izdiwho/" target="_blank" rel="noopener" class="coffee-link">
+            ☕ support me
+        </a>
+    </footer>
+    <script src="renderer.js"></script>
+</body>
+
+</html>
