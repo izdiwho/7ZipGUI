@@ -48,6 +48,11 @@
           "path": "/Applications"
         }
       ]
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "izdiwho",
+      "repo": "7ZipGUI"
     }
   },
   "devDependencies": {
