@@ -8,10 +8,15 @@
     "start": "electron .",
     "build": "electron-builder"
   },
-  "author": {
-    "name": "Izdihar (w/ Claude Sonnet-3.5)"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/izdiwho/7ZipGUI.git"
   },
-  "license": "ISC",
+  "author": {
+    "name": "izdiwho w/ Claude Sonnet-3.5",
+    "url": "https://izdiwho.com"
+  },
+  "license": "MIT",
   "build": {
     "appId": "com.7zipgui.app",
     "productName": "7Zip GUI",
