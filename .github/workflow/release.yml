@@ -1,0 +1,23 @@
+name: Release Source Code
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Create Source ZIP
+        run: |
+          zip -r 7ZipGUI.zip . -x "*.git*"
+          
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: 7ZipGUI.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
