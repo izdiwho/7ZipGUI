@@ -1,6 +1,6 @@
 # 7ZipGUI
 
-A simple GUI wrapper for 7-Zip on macOS. Created using Electron and Claude.
+A simple GUI wrapper for 7-Zip on macOS. Created using Electron and Claude Sonnet-3.5.
 
 <img src="screenshot.png" width="600" alt="7ZipGUI Screenshot">
 
